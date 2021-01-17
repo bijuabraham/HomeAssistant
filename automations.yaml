@@ -1,0 +1,207 @@
+- id: '1588732742838'
+  alias: Hallway Light On with Stair Case motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.staircase_motion_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - device_id: ed7d49e123674c128aa8bb6d2f72bb48
+    domain: switch
+    entity_id: switch.halway_light_switch
+    type: turn_on
+- id: '1588734367429'
+  alias: Sunroom Light On
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.sunroom_motion_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - brightness_pct: 100
+    device_id: cf0103b92a6b4000bc1c5e347bf5dc03
+    domain: light
+    entity_id: light.chandelier_level
+    type: turn_on
+  mode: single
+- id: '1588734717059'
+  alias: Hallway Light Off
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.staircase_motion_sensor
+    for: '5'
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - device_id: ed7d49e123674c128aa8bb6d2f72bb48
+    domain: switch
+    entity_id: switch.halway_light_switch
+    type: turn_off
+- id: '1588742077029'
+  alias: Frontdoor Battery Low
+  description: ''
+  trigger:
+  - type: battery_level
+    platform: device
+    device_id: d45e14f4b36adb50c2a85134f60687d0
+    entity_id: sensor.front_door_battery
+    domain: sensor
+    below: 30
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+  condition: []
+  action:
+  - service: notify.signal
+    data:
+      message: Frontdoor battery is low!
+  mode: single
+- id: '1588742577568'
+  alias: Sunroom Chandlier Off
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.sunroom_motion_sensor
+    for: hours:1
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - device_id: cf0103b92a6b4000bc1c5e347bf5dc03
+    domain: light
+    entity_id: light.chandelier_level
+    type: turn_off
+  mode: single
+- id: '1589683842175'
+  alias: Notify Chandlier Off
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition:
+  - condition: state
+    entity_id: light.chandelier_level
+    state: 'off'
+  action:
+  - data:
+      message: Chandlier is not ON
+    service: notify.mobile_app_biju_iphone
+  mode: single
+- id: '1600054381084'
+  alias: Front door auto lock
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: lock.schlage_door_locked
+    from: lock
+    to: unlock
+  condition: []
+  action:
+  - device_id: 371bf4df617b4f329ff7d90e2f1b9221
+    domain: lock
+    entity_id: lock.schlage_door_locked
+    type: lock
+  - data:
+      message: Door Auto locked
+    service: notify.signal
+  mode: single
+- id: '1610785095739'
+  alias: Door unlock
+  description: Monitor Tesla Location
+  trigger:
+  - platform: device
+    device_id: 371bf4df617b4f329ff7d90e2f1b9221
+    domain: lock
+    entity_id: lock.schlage_door_locked
+    type: unlocked
+  condition: []
+  action:
+  - service: notify.signal
+    data:
+      Message: Door got unlocked
+  mode: single
+- id: '1610785322278'
+  alias: Tesla Update
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: b01e58b76628657a6c36128677411f47
+    entity_id: binary_sensor.biju_abraham_update_available_sensor
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.signal
+    data:
+      message: Update available for Tesla
+  mode: single
+- id: '1610785448179'
+  alias: Tesla Door
+  description: ''
+  trigger:
+  - platform: device
+    device_id: b01e58b76628657a6c36128677411f47
+    domain: lock
+    entity_id: lock.biju_abraham_door_lock
+    type: unlocked
+  condition: []
+  action:
+  - service: notify.signal
+    data:
+      message: Car door opened
+  mode: single
+- id: '1610785708534'
+  alias: Garage Door
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 25ef4d92b7c287703ab84626ad887866
+    domain: cover
+    entity_id: cover.garage_door_opener
+    type: opened
+  condition: []
+  action:
+  - service: notify.signal
+    data:
+      message: Garage Door Opened
+  mode: single
+- id: '1610870676617'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      day: '0'
+      actions:
+      - service: notify.signal
+        data:
+          message: Battery below 20%
+      threshold: '20'
+- id: '1610871538295'
+  alias: Send a camera snapshot when motion is detected
+  description: ''
+  use_blueprint:
+    path: vorion/send-camera-snapshot-notification-on-motion.yaml
+    input:
+      delay: '0'
+      camera: camera.front_door
+      motion_sensor: binary_sensor.front_door_motion
+      notify_device: d4fc51f5fb1149bd82eb7fe60a408fca
+      is_ios: true
+      notification_title: Motion detected

@@ -1,0 +1,102 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+mobile_app:
+homekit:
+recorder:
+    db_url: mysql://homeassistant:xyz1234@core-mariadb/homeassistant?charset=utf8mb4
+    purge_keep_days: 2
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+sensor:
+  - platform: enphase_envoy
+    ip_address: 10.168.1.139
+    username: "eweoy"
+    password: "01lkj92"
+    monitored_conditions:
+      - production
+      - daily_production
+      - seven_days_production
+      - lifetime_production
+      - consumption
+      - daily_consumption
+      - seven_days_consumption
+      - lifetime_consumption
+      - inverters
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: processor_use
+      - type: last_boot
+      
+# Example configuration.yaml entry
+#media_player:
+#  - platform: denonavr
+#    host: 10.168.1.53
+#    name: "Denon Receiver"
+#    show_all_sources: true
+#    timeout: 2
+    
+#samsungtv:
+#  - host: 10.168.1.102
+#    name: "Bedroom TV"
+#    turn_on_action:
+#      - service: wake_on_lan.send_magic_packet
+#        data:
+#          mac: "bc:8c:cd:c7:e5:28"
+    
+#panel_custom:
+#  - name: zwavegraph2
+#    sidebar_title: "Z-Wave Graph"
+#    sidebar_icon: mdi:access-point-network
+    
+switch:
+- platform: command_line
+  switches:
+    pc:
+      command_off: 'curl http://10.168.1.56:5001/bijuta/hibernate'
+- platform: wake_on_lan
+  name: desktop
+  host: 10.168.1.56
+  mac: e0:69:95:b6:da:32
+- platform: template
+  switches:
+    windows:
+      value_template: '{{ states.switch.desktop.state }}'
+      turn_on:
+        service: switch.turn_on
+        entity_id: switch.desktop
+      turn_off:
+        service: switch.turn_off
+        entity_id: switch.pc
+
+# Signal Messenger
+# Example configuration.yaml entry for Signal Messenger
+notify:
+  - name: signal
+    platform: signal_messenger
+    url: "http://localhost:8080" # the URL where the Signal Messenger REST API is listening
+    number: "+1408345682" # the sender number
+    recipients: # one or more recipients
+      - "group.Q25yWDlVQll4NlF4YmVnSWlQMUJodz09"
+        
+#amcrest:
+#  - host: 10.168.1.105
+#    username: admin
+#    password: xyz1234
+    
