@@ -143,7 +143,7 @@
   - type: turned_on
     platform: device
     device_id: b01e58b76628657a6c36128677411f47
-    entity_id: binary_sensor.biju_abraham_update_available_sensor
+    entity_id: binary_sensor.biju_lastname_update_available_sensor
     domain: binary_sensor
   condition: []
   action:
@@ -158,7 +158,7 @@
   - platform: device
     device_id: b01e58b76628657a6c36128677411f47
     domain: lock
-    entity_id: lock.biju_abraham_door_lock
+    entity_id: lock.biju_lastname_door_lock
     type: unlocked
   condition: []
   action:

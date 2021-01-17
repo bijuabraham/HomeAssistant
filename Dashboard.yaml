@@ -1,0 +1,509 @@
+title: name1 lastname
+views:
+  - panel: false
+    path: home
+    title: Home
+    badges:
+      - entity: light.bedroom_light_level
+      - entity: light.name2_light_level
+      - entity: light.guest_light_level
+      - entity: light.chandelier_level
+      - entity: switch.jasco_products_46201_in_wall_smart_switch_switch
+      - entity: light.livingroom_light_level
+      - entity: light.office_light_level
+      - entity: sensor.livingroom_temperature_temperature
+      - entity: sensor.bedroom_temperature_temperature
+    cards:
+      - entity: weather.edinburgh
+        name: Fremont Weather
+        type: weather-forecast
+      - entity: climate.livingroom_temperature
+        name: Home
+        type: thermostat
+      - entities:
+          - entity: sensor.livingroom_temperature_temperature
+          - entity: binary_sensor.livingroom_temperature_occupancy
+          - entity: sensor.bedroom_temperature_temperature
+          - entity: binary_sensor.bedroom_temperature_occupancy
+          - entity: binary_sensor.staircase_motion_sensor
+          - entity: binary_sensor.sunroom_motion_sensor
+          - entity: sensor.livingroom_temperature_humidity
+        title: Monitoring
+        type: entities
+      - type: picture-glance
+        title: Front Door
+        image: 'https://demo.home-assistant.io/stub_config/kitchen.png'
+        entities:
+          - entity: binary_sensor.front_door_ding
+          - entity: binary_sensor.front_door_motion
+          - entity: sensor.front_door_volume
+        camera_image: camera.front_door
+      - type: picture-glance
+        title: Front Yard
+        image: 'https://demo.home-assistant.io/stub_config/kitchen.png'
+        entities:
+          - entity: light.front_yard_light
+          - entity: binary_sensor.front_yard_motion
+          - entity: switch.front_yard_siren
+        camera_image: camera.front_yard
+      - type: picture-glance
+        title: Front Garage
+        image: 'https://demo.home-assistant.io/stub_config/kitchen.png'
+        entities:
+          - entity: binary_sensor.front_garage_motion
+          - entity: light.front_garage_light
+          - entity: switch.front_garage_siren
+          - entity: sensor.front_garage_volume
+        camera_image: camera.front_garage
+      - entities:
+          - entity: binary_sensor.livingroom_temperature_occupancy
+          - entity: binary_sensor.sunroom_motion_sensor
+          - entity: sensor.livingroom_temperature_temperature
+          - entity: switch.halway_light_switch
+          - entity: light.livingroom_light_level
+          - entity: switch.halway_light_switch
+          - entity: switch.jasco_products_46201_in_wall_smart_switch_switch
+          - entity: light.chandelier_level
+        show_header_toggle: true
+        title: Downstairs
+        type: entities
+      - entities:
+          - entity: binary_sensor.bedroom_temperature_occupancy
+          - entity: sensor.bedroom_temperature_temperature
+          - entity: light.bedroom_light_level
+          - entity: switch.bedroom_fan_switch
+          - entity: switch.guest_outlet_switch
+          - entity: light.office_light_level
+          - entity: light.name2_light_level
+          - entity: light.guest_light_level
+        title: Upstairs
+        type: entities
+      - type: entities
+        entities:
+          - entity: binary_sensor.front_door_ding
+          - entity: binary_sensor.front_door_motion
+          - entity: light.front_garage_light
+          - entity: binary_sensor.front_garage_motion
+          - entity: light.front_yard_light
+          - entity: binary_sensor.front_yard_motion
+          - entity: lock.schlage_door_locked
+          - entity: sensor.schlage_door_battery_level
+          - entity: cover.garage_door_opener
+        title: Outdoor
+      - entities:
+          - entity: binary_sensor.front_door_ding
+          - entity: binary_sensor.front_door_motion
+          - entity: sensor.front_door_last_ding
+          - entity: sensor.front_door_last_motion
+          - entity: lock.schlage_door_locked
+        show_header_toggle: false
+        title: Doorbell
+        type: entities
+      - entities:
+          - entity: switch.desktop
+          - entity: switch.pc
+        show_header_toggle: false
+        title: Desktop
+        type: entities
+      - type: entities
+        entities:
+          - entity: vacuum.roomba
+          - entity: sensor.roomba_battery_level
+          - entity: binary_sensor.roomba_bin_full
+        title: Roomba
+      - entities:
+          - entity: scene.downstairs_only
+          - entity: scene.tv_lighting
+          - entity: scene.upstairs_only
+        title: Scenes
+        type: glance
+      - entities:
+          - entity: weather.livingroom_temperature
+          - entity: sensor.livingroom_temperature_temperature
+          - entity: sensor.bedroom_temperature
+        hours_to_show: 12
+        refresh_interval: 0
+        type: history-graph
+  - badges: []
+    cards:
+      - cards:
+          - entity: sensor.envoy_current_energy_production
+            max: 10000
+            min: 0
+            name: Production
+            severity:
+              green: 6000
+              red: 1000
+              yellow: 3000
+            type: gauge
+          - entity: sensor.envoy_current_energy_consumption
+            max: 10000
+            min: 0
+            name: Consumption
+            severity:
+              green: 0
+              red: 6000
+              yellow: 3000
+            type: gauge
+        title: Current Usage
+        type: horizontal-stack
+      - entities:
+          - entity: sensor.envoy_current_energy_consumption
+            name: C
+          - entity: sensor.envoy_current_energy_production
+            name: P
+          - entity: sensor.envoy_today_s_energy_consumption
+            name: TC
+          - entity: sensor.envoy_today_s_energy_production
+            name: TP
+          - entity: sensor.envoy_last_seven_days_energy_consumption
+            name: 7C
+          - entity: sensor.envoy_last_seven_days_energy_production
+            name: 7P
+          - entity: sensor.envoy_lifetime_energy_consumption
+            name: LC
+          - entity: sensor.envoy_lifetime_energy_production
+            name: 7P
+        show_icon: false
+        show_name: true
+        show_state: true
+        title: Solar Energy Usage
+        type: glance
+      - cards:
+          - entity: sensor.envoy_today_s_energy_production
+            max: 30000
+            min: -10
+            name: Production
+            severity:
+              green: 22500
+              red: 0
+              yellow: 15000
+            type: gauge
+          - entity: sensor.envoy_today_s_energy_consumption
+            max: 30000
+            min: 0
+            name: Consumption
+            severity:
+              green: 0
+              red: 22500
+              yellow: 15000
+            type: gauge
+        title: Today's Usage
+        type: horizontal-stack
+      - entities:
+          - entity: sensor.envoy_inverter_121546060675
+          - entity: sensor.envoy_inverter_121547002358
+          - entity: sensor.envoy_inverter_121547002417
+          - entity: sensor.envoy_inverter_121547002490
+          - entity: sensor.envoy_inverter_121547002569
+          - entity: sensor.envoy_inverter_121547002612
+          - entity: sensor.envoy_inverter_121547008131
+          - entity: sensor.envoy_inverter_121547008355
+          - entity: sensor.envoy_inverter_121547008494
+        title: Inverters
+        type: entities
+      - cards:
+          - entity: sensor.name1_iphone_battery_level
+            max: 100
+            min: 0
+            name: iPhone
+            severity:
+              green: 70
+              red: 20
+              yellow: 50
+            type: gauge
+          - entity: sensor.name1_lastname_battery_sensor
+            max: 100
+            min: 0
+            name: Tesla
+            severity:
+              green: 70
+              red: 20
+              yellow: 50
+            type: gauge
+            unit: '%'
+        title: Batteries
+        type: horizontal-stack
+      - cards:
+          - entity: sensor.processor_use
+            max: 100
+            min: 0
+            name: Processor
+            severity:
+              green: 0
+              red: 50
+              yellow: 20
+            type: gauge
+          - entity: sensor.disk_use_percent
+            max: 100
+            min: 0
+            name: Disk
+            severity:
+              green: 0
+              red: 50
+              yellow: 20
+            type: gauge
+          - entity: sensor.memory_use_percent
+            max: 100
+            min: 0
+            name: Memory
+            severity:
+              green: 0
+              red: 50
+              yellow: 20
+            type: gauge
+        title: Processor Usage
+        type: vertical-stack
+      - entities:
+          - entity: sensor.envoy_current_energy_consumption
+          - entity: sensor.envoy_current_energy_production
+        hours_to_show: 48
+        refresh_interval: 0
+        title: Today's Usage
+        type: history-graph
+    icon: ''
+    panel: false
+    path: solar
+    title: Energy
+  - badges:
+      - entity: binary_sensor.name1_lastname_charger_sensor
+      - entity: binary_sensor.name1_lastname_parking_brake_sensor
+      - entity: binary_sensor.name1_lastname_online_sensor
+      - entity: climate.name1_lastname_hvac_climate_system
+      - entity: device_tracker.name1_lastname_location_tracker
+      - entity: lock.name1_lastname_charger_door_lock
+      - entity: lock.name1_lastname_door_lock
+      - entity: lock.name1_lastname_frunk_lock
+      - entity: lock.name1_lastname_trunk_lock
+      - entity: sensor.name1_lastname_battery_sensor
+      - entity: sensor.name1_lastname_charging_rate_sensor
+      - entity: sensor.name1_lastname_mileage_sensor
+      - entity: sensor.name1_lastname_range_sensor
+      - entity: sensor.name1_lastname_temperature_sensor_inside
+      - entity: sensor.name1_lastname_temperature_sensor_outside
+      - entity: switch.name1_lastname_charger_switch
+      - entity: switch.name1_lastname_maxrange_switch
+      - entity: switch.name1_lastname_sentry_mode_switch
+      - entity: switch.name1_lastname_update_switch
+    cards:
+      - elements:
+          - entity: binary_sensor.name1_lastname_charger_sensor
+            style:
+              left: 3%
+              top: 75%
+            type: state-icon
+          - entity: climate.name1_lastname_hvac_climate_system
+            style:
+              left: 50%
+              top: 12%
+            type: state-icon
+          - entity: sensor.name1_lastname_temperature_sensor_inside
+            style:
+              left: 50%
+              top: 20%
+            type: state-badge
+          - entity: sensor.name1_lastname_temperature_sensor_outside
+            style:
+              left: 80%
+              top: 20%
+            type: state-badge
+          - entity: sensor.name1_lastname_range_sensor
+            style:
+              left: 18%
+              top: 80%
+            type: state-badge
+          - entity: sensor.name1_lastname_mileage_sensor
+            style:
+              left: 39%
+              top: 39%
+            type: state-badge
+          - entity: binary_sensor.name1_lastname_parking_brake_sensor
+            style:
+              left: 50%
+              top: 45%
+            type: state-icon
+          - entity: lock.name1_lastname_door_lock
+            style:
+              left: 23%
+              top: 40%
+            type: state-icon
+          - entity: lock.name1_lastname_door_lock
+            style:
+              left: 77%
+              top: 35%
+            type: state-icon
+          - entity: lock.name1_lastname_door_lock
+            style:
+              left: 23%
+              top: 58%
+            type: state-icon
+          - entity: lock.name1_lastname_door_lock
+            style:
+              left: 77%
+              top: 58%
+            type: state-icon
+          - entity: lock.name1_lastname_trunk_lock
+            style:
+              left: 50%
+              top: 90%
+            type: state-icon
+          - entity: lock.name1_lastname_frunk_lock
+            style:
+              left: 50%
+              top: 2%
+            type: state-icon
+          - entity: lock.name1_lastname_charger_door_lock
+            style:
+              left: 23%
+              top: 76%
+            type: state-icon
+          - entity: sensor.name1_lastname_battery_sensor
+            style:
+              left: 23%
+              top: 73%
+            type: state-icon
+          - entity: switch.name1_lastname_sentry_mode_switch
+            style:
+              left: 50%
+              top: 35%
+            type: state-icon
+          - entity: switch.name1_lastname_update_switch
+            style:
+              left: 50%
+              top: 38%
+            type: state-icon
+        image: /local/tesla3.png
+        type: picture-elements
+    panel: true
+    path: tesla
+    title: Tesla
+  - badges: []
+    cards:
+      - entities:
+          - entity: binary_sensor.home_sprinkler
+          - entity: switch.driveway
+          - entity: switch.front_lawn
+          - entity: switch.front_plants
+          - entity: switch.home_sprinkler_in_standby_mode
+          - entity: switch.front_lawn_driveway_front_plants_schedule
+        show_header_toggle: false
+        title: Sprinkler Controls
+        type: entities
+      - aspect_ratio: 50%
+        entity: switch.driveway
+        image: /local/flower.jpeg
+        name: Driveway
+        tap_action:
+          action: toggle
+        type: picture-entity
+      - aspect_ratio: 50%
+        entity: switch.front_lawn
+        image: /local/lawn.jpeg
+        name: Front Lawn
+        type: picture-entity
+      - aspect_ratio: 50%
+        entity: switch.front_plants
+        image: /local/garden.jpeg
+        name: Front Plants
+        type: picture-entity
+    path: front-lawn
+    title: Front Lawn
+  - badges: []
+    cards:
+      - entity: media_player.sunroom_tv
+        type: media-control
+      - entity: media_player.roku_sunroom
+        type: media-control
+      - entity: media_player.all_speakers
+        type: media-control
+      - entity: media_player.as_aftmm_cast
+        type: media-control
+      - entity: media_player.living_room_sonos
+        type: media-control
+      - entity: media_player.bedroom_tv
+        type: media-control
+    path: sunroom
+    title: Media
+  - badges: []
+    cards:
+      - entity: sensor.name1_iphone_storage
+        max: 100
+        min: 0
+        severity:
+          green: 60
+          red: 30
+          yellow: 40
+        type: gauge
+      - entity: sensor.name3s_apple_watch_battery_state
+        max: 100
+        min: 0
+        severity:
+          green: 60
+          red: 30
+          yellow: 40
+        type: gauge
+      - entity: sensor.name1s_macbook_pro_battery_state
+        max: 100
+        min: 0
+        severity:
+          green: 60
+          red: 30
+          yellow: 40
+        type: gauge
+      - entities:
+          - entity: sensor.name2_iphone_battery_state
+          - entity: sensor.name2_iphone_connection_type
+          - entity: sensor.name2_iphone_storage
+          - entity: sensor.name2_iphone_battery_level
+          - entity: sensor.name2_iphone_last_update_trigger
+        show_icon: true
+        show_name: false
+        show_state: true
+        title: name2 iPhone
+        type: glance
+      - entities:
+          - entity: sensor.name1_iphone_battery_state
+          - entity: sensor.name1_iphone_connection_type
+          - entity: sensor.name1_iphone_storage
+          - entity: sensor.name1_iphone_battery_level
+          - entity: sensor.name1_iphone_last_update_trigger
+        show_icon: true
+        show_name: false
+        show_state: true
+        title: name1 iPhone
+        type: glance
+      - dark_mode: false
+        entities:
+          - entity: sensor.name1_iphone_geocoded_location
+        hours_to_show: 0
+        title: name1 Phone Location
+        type: map
+      - dark_mode: false
+        entities:
+          - entity: sensor.name2_iphone_geocoded_location
+        hours_to_show: 0
+        title: name2 Phone Location
+        type: map
+    icon: 'mdi:phone'
+    panel: false
+    path: phones
+    title: Phones
+  - title: Device Tracker
+    path: devices
+    panel: true
+    badges: []
+    cards:
+      - type: map
+        entities:
+          - entity: device_tracker.name2_iphone
+          - entity: device_tracker.name1s_macbook_pro
+          - entity: device_tracker.name1_lastname_location_tracker
+          - entity: device_tracker.name1_iphone_2
+          - entity: device_tracker.name1s_iwatch_6
+          - entity: device_tracker.hdb_name1_iphone_9602
+          - entity: device_tracker.iphone_2
+          - entity: device_tracker.macbook_pro_2
+          - entity: device_tracker.name2_iphone_2
+          - entity: device_tracker.rebecca_s_iphone
+          - entity: device_tracker.name3s_apple_watch
+        hours_to_show: 0
